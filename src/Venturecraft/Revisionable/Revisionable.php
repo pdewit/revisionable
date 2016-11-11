@@ -147,7 +147,7 @@ class Revisionable extends Eloquent
                     'old_value'             => array_get($this->originalData, $key),
                     'new_value'             => $this->updatedData[$key],
                     'user_id'               => $this->getSystemUserId(),
-                    'impersonate_id'        => session('impersonate', null) ? session(Auth::getName(), null) : null,
+                    'impersonate_id'        => session('impersonate', null) ? session(\Auth::getName(), null) : null,
                     'created_at'            => new \DateTime(),
                     'updated_at'            => new \DateTime(),
                 );
@@ -183,7 +183,7 @@ class Revisionable extends Eloquent
                 'old_value' => null,
                 'new_value' => $this->{self::CREATED_AT},
                 'user_id' => $this->getSystemUserId(),
-                'impersonate_id' => session('impersonate', null) ? session(Auth::getName(), null) : null,
+                'impersonate_id' => session('impersonate', null) ? session(\Auth::getName(), null) : null,
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
@@ -209,7 +209,7 @@ class Revisionable extends Eloquent
                 'old_value' => null,
                 'new_value' => $this->{$this->getDeletedAtColumn()},
                 'user_id' => $this->getSystemUserId(),
-                'impersonate_id' => session('impersonate', null) ? session(Auth::getName(), null) : null,
+                'impersonate_id' => session('impersonate', null) ? session(\Auth::getName(), null) : null,
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
