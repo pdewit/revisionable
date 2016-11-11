@@ -247,6 +247,29 @@ class Revision extends Eloquent
         }
     }
 
+    public function adminResponsible()
+    {
+        if (empty($this->impersonate_id)) { return false; }
+        if (class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
+            || class_exists($class = '\Cartalyst\Sentinel\Laravel\Facades\Sentinel')
+        ) {
+            return $class::findUserById($this->impersonate_id);
+        } else {
+            $user_model = app('config')->get('auth.model');
+
+            if (empty($user_model)) {
+                $user_model = app('config')->get('auth.providers.users.model');
+                if (empty($user_model)) {
+                    return false;
+                }
+            }
+            if (!class_exists($user_model)) {
+                return false;
+            }
+            return $user_model::find($this->impersonate_id);
+        }
+    }
+
     /**
      * Returns the object we have the history of
      *
