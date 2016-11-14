@@ -32,6 +32,6 @@ class CreateRevisionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('revisions');
+        Schema::dropIfExists('revisions');
     }
 }
