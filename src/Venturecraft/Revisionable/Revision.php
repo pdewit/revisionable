@@ -2,7 +2,9 @@
 
 namespace Venturecraft\Revisionable;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+
+use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * Revision.
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * (c) Venture Craft <http://www.venturecraft.com.au>
  */
-class Revision extends Eloquent
+class Revision extends Model
 {
     /**
      * @var string
@@ -220,52 +222,19 @@ class Revision extends Eloquent
     /**
      * User Responsible.
      *
-     * @return User user responsible for the change
      */
     public function userResponsible()
     {
-        if (empty($this->user_id)) { return false; }
-        if (class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
-            || class_exists($class = '\Cartalyst\Sentinel\Laravel\Facades\Sentinel')
-        ) {
-            return $class::findUserById($this->user_id);
-        } else {
-            $user_model = app('config')->get('auth.model');
+        $user_model = app('config')->get('auth.providers.users.model');
 
-            if (empty($user_model)) {
-                $user_model = app('config')->get('auth.providers.users.model');
-                if (empty($user_model)) {
-                    return false;
-                }
-            }
-            if (!class_exists($user_model)) {
-                return false;
-            }
-            return $user_model::withoutGlobalScopes()->find($this->user_id);
-        }
+        return $this->belongsTo($user_model, 'user_id');
     }
 
     public function adminResponsible()
     {
-        if (empty($this->impersonate_id)) { return false; }
-        if (class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
-            || class_exists($class = '\Cartalyst\Sentinel\Laravel\Facades\Sentinel')
-        ) {
-            return $class::findUserById($this->impersonate_id);
-        } else {
-            $user_model = app('config')->get('auth.model');
+        $user_model = app('config')->get('auth.providers.users.model');
 
-            if (empty($user_model)) {
-                $user_model = app('config')->get('auth.providers.users.model');
-                if (empty($user_model)) {
-                    return false;
-                }
-            }
-            if (!class_exists($user_model)) {
-                return false;
-            }
-            return $user_model::withoutGlobalScopes()->find($this->impersonate_id);
-        }
+        return $this->belongsTo($user_model, 'impersonate_id');
     }
 
     /**
