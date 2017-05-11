@@ -227,14 +227,14 @@ class Revision extends Model
     {
         $user_model = app('config')->get('auth.providers.users.model');
 
-        return $this->belongsTo($user_model, 'user_id');
+        return $this->belongsTo($user_model, 'user_id')->withoutGlobalScopes();
     }
 
     public function adminResponsible()
     {
         $user_model = app('config')->get('auth.providers.users.model');
 
-        return $this->belongsTo($user_model, 'impersonate_id');
+        return $this->belongsTo($user_model, 'impersonate_id')->withoutGlobalScopes();
     }
 
     /**
