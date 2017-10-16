@@ -1,5 +1,6 @@
 <?php namespace Venturecraft\Revisionable;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /*
@@ -148,8 +149,8 @@ class Revisionable extends Eloquent
                     'new_value'             => $this->updatedData[$key],
                     'user_id'               => $this->getSystemUserId(),
                     'impersonate_id'        => session('impersonate', null) ? session(\Auth::getName(), null) : null,
-                    'created_at'            => new \DateTime(),
-                    'updated_at'            => new \DateTime(),
+                    'created_at'            => Carbon::now(),
+                    'updated_at'            => Carbon::now(),
                 );
             }
 
@@ -210,8 +211,8 @@ class Revisionable extends Eloquent
                 'new_value' => $this->{$this->getDeletedAtColumn()},
                 'user_id' => $this->getSystemUserId(),
                 'impersonate_id' => session('impersonate', null) ? session(\Auth::getName(), null) : null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             );
             $revision = new \Venturecraft\Revisionable\Revision;
             \DB::table($revision->getTable())->insert($revisions);

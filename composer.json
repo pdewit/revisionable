@@ -17,7 +17,8 @@
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "~5.3",
-        "illuminate/database": "~5.3"
+        "illuminate/database": "~5.3",
+        "nesbot/carbon": "^1.22"
     },
     "autoload": {
         "classmap": [
