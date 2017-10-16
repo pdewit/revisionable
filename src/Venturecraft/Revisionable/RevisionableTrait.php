@@ -7,6 +7,8 @@
  *
  */
 
+use Carbon\Carbon;
+
 /**
  * Class RevisionableTrait
  * @package Venturecraft\Revisionable
@@ -183,8 +185,8 @@ trait RevisionableTrait
                     'new_value' => $this->updatedData[$key],
                     'user_id' => $this->getSystemUserId(),
                     'impersonate_id' => session('impersonate', null) ? session(\Auth::getName(), null) : null,
-                    'created_at' => new \DateTime(),
-                    'updated_at' => new \DateTime(),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 );
             }
 
